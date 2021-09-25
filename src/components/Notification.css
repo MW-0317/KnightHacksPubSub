@@ -1,0 +1,8 @@
+.notification {
+	padding: 48px;
+	margin-top: 48px;
+	font-size: large;
+	background-color: #43902e;
+	color: white;
+	text-align: center;
+}
