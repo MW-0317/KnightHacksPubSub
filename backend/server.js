@@ -201,23 +201,22 @@ app.post('/verifyOTP', (req, res) => {
         .create({to: req.body.phone, code: req.body.pin})
         .then(verification_check => {
             if (verification_check.status == "approved"){
-                res.status(200);
-                res.send("Ok");
-
                 var User = mongoose.model('UserModel', UserModelSchema);
                 var phone_num = req.body.phone;
                 User.findOne({'phone_number': phone_num}, '', function(err, user){
                     if (user == null) {
                         UserModel.create({name: req.body.name, phone_number: req.body.phone, pubsubs: req.body.pubsubs}, function(err, inst){
-                            if (err){ res.send(400); return;}
-                            res.send(200);
+                            if (err){ res.status(400); res.send("Bad request"); return;}
+                            res.status(200);
+                            res.send("Ok");
                         })
                         return;
                     }
                     user.pubsubs = req.body.pubsubs;
                     user.name = req.body.name;
                     user.save();
-                    res.send(200);
+                    res.status(200);
+                    res.send("Ok");
                 });
             }
             else{
