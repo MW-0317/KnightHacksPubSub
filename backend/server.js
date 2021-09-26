@@ -168,7 +168,7 @@ app.get('/subs/:subName', (req, res) => {
 //     })
 // });
 
-app.get('/sendOTP', (req, res) => {
+app.post('/sendOTP', (req, res) => {
     // req.body.phone
     // req.body.pin
     // var tempServiceSID;
@@ -195,7 +195,7 @@ app.get('/sendOTP', (req, res) => {
             });
 });
 
-app.get('/verifyOTP', (req, res) => {
+app.post('/verifyOTP', (req, res) => {
     client.verify.services(twil_ser_sid)
         .verificationChecks
         .create({to: req.body.phone, code: req.body.pin})
