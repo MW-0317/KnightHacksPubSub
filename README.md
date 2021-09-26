@@ -11,7 +11,7 @@ https://github.com/zenith110/pubsub_api
 Well you don't want to miss out on the best and most amazing sandwich deals Publix has to offer do you? Obviously not, well our site (using the incredible API from Zenith110) gives you a website list of the most current and up to date sales (with a countdown). AND you can subscribe to recieve updates when certain sandwiches go on sale using your phone number! Isn't that incredible!
 Just take a look at our customers:
 
-"Incredible, saved my life"
+        "Incredible, saved my life"
           - Bruce Wayne
           
           
