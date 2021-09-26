@@ -196,6 +196,7 @@ app.post('/sendOTP', (req, res) => {
 });
 
 app.post('/verifyOTP', (req, res) => {
+    var isApproved = False;
     client.verify.services(twil_ser_sid)
         .verificationChecks
         .create({to: req.body.phone, code: req.body.pin})
@@ -203,29 +204,30 @@ app.post('/verifyOTP', (req, res) => {
             if (verification_check.status == "approved"){
                 res.status(200);
                 res.send("Ok");
+
+                var User = mongoose.model('UserModel', UserModelSchema);
+                var phone_num = req.body.phone;
+                User.findOne({'phone_number': phone_num}, '', function(err, user){
+                    if (user == null) {
+                        UserModel.create({name: req.body.name, phone_number: req.body.phone, pubsubs: req.body.pubsubs}, function(err, inst){
+                            if (err){ res.send(400); return;}
+                            res.send(200);
+                        })
+                        return;
+                    }
+                    user.pubsubs = req.body.pubsubs;
+                    user.name = req.body.name;
+                    user.save();
+                    res.send(200);
+                });
             }
             else{
                 res.status(400);
                 res.send("Bad request");
             }
-
         });
 
-    var User = mongoose.model('UserModel', UserModelSchema);
-    var phone_num = req.body.phone;
-    User.findOne({'phone_number': phone_num}, '', function(err, user){
-        if (user == null) {
-            UserModel.create({name: req.body.name, phone_number: req.body.phone, pubsubs: req.body.pubsubs}, function(err, inst){
-                if (err){ res.send(400); return;}
-                res.send(200);
-            })
-            return;
-        }
-        user.pubsubs = req.body.pubsubs;
-        user.name = req.body.name;
-        user.save();
-        res.send(200);
-    });
+    
 
     
 });
