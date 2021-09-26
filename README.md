@@ -21,3 +21,13 @@ Just take a look at our customers:
                                                   
                                                                                                   "Who wouldn't want to use this?!"
                                                                                              - Dwayne "The Rock" Johnson
+
+
+
+
+# The Team
+Dan - Graduate Student, Front-End Development, and much help to Back-End Development
+Andrew - Freshman, Sandwich Artist
+Sam - Freshman, Sandwich Artist
+(You might be suprised how much time those took to draw)
+Mark - Freshman, Back-End Development

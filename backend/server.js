@@ -196,7 +196,6 @@ app.post('/sendOTP', (req, res) => {
 });
 
 app.post('/verifyOTP', (req, res) => {
-    var isApproved = False;
     client.verify.services(twil_ser_sid)
         .verificationChecks
         .create({to: req.body.phone, code: req.body.pin})
