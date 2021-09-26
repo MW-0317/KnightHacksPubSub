@@ -1,0 +1,51 @@
+{
+	"chicken tenders": {
+		"id": 1,
+		"name": "Publix Chicken Tender Sub",
+		"nickname": "chicken tenders",
+		"description": "Hot Chicken Tenders and Choice of Cheese",
+		"image": "./images/1-1.png"
+	},
+	"jerk turkey and gouda": {
+		"id": 2,
+		"name": "Boar's Head® Jerk Turkey & Gouda Sub",
+		"nickname": "jerk turkey and gouda",
+		"description": "Ovengold Turkey Breast and Choice of Cheese",
+		"image": "./images/2-1.png"
+	},
+	"ham": {
+		"id": 3,
+		"name": "Publix Ham Sub",
+		"nickname": "ham",
+		"description": "Tavern Ham and Choice of Cheese",
+		"image": "./images/3-1.png"
+	},
+	"turkey": {
+		"id": 4,
+		"name": "Publix Turkey Sub",
+		"nickname": "turkey",
+		"description": "Oven Roasted Turkey Breast and Choice of Cheese",
+		"image": "./images/4-1.png"
+	},
+	"meatball": {
+		"id": 5,
+		"name": "Publix Homestyle Beef Meatball Sub",
+		"nickname": "meatball",
+		"description": "Beef Meatballs, Slow Cooked Tomato Sauce",
+		"image": "./images/5-1.png"
+	},
+	"italian": {
+		"id": 6,
+		"name": "Publix Italian Sub",
+		"nickname": "italian",
+		"description": "Genoa Salami, Tavern Ham, Hot Cappy Ham, Choice of Cheese and Salad Toppings",
+		"image": "./images/6-1.png"
+	},
+	"ultimate": {
+		"id": 7,
+		"name": "Publix Ultimate Sub",
+		"nickname": "ultimate",
+		"description": "Tavern Ham, Turkey Breast, Roast Beef and Choice of Cheese",
+		"image": "./images/7-1.png"
+	}
+}

@@ -5,6 +5,8 @@ const dotenv = require('dotenv');
 const {UserModel, UserModelSchema} = require("./schemas/Users.js")
 dotenv.config()
 
+const subData = require("./data.json")
+
 const accountSid = process.env.TWILIO_SID; 
 const authToken = process.env.TWILIO_SEC; 
 const client = require('twilio')(accountSid, authToken); 
@@ -17,6 +19,7 @@ app.use(bodyParser.json());
 const mongoURI = process.env.MONGOURI;
 const port = process.env.PORT;
 const twil_ser_sid = process.env.TWILIO_SERVICE_SID;
+const twil_ser_pub_sid = process.env.TWILLO_SERVICE_PUB_SID;
 
 const cors = require('cors');
 app.use(cors());
@@ -138,6 +141,16 @@ app.get('/subs/:subName', (req, res) => {
 //     })
 // });
 
+
+// app.get('/test', (req, res) => {
+//     axios.get("https://services.publix.com/api/v1/storelocation?types=R,G,H,N,S&option=&count=15&includeOpenAndCloseDates=true&isWebsite=true&zipCode=" + req.body.zip)
+//         .then(aresName => {
+//             res.json(aresName.data);
+//         }).catch(err => {
+//             console.log(err);
+//         });
+// });
+
 // app.get('/test', (req, res) => {
 //     // client.verify.services.create({friendlyName: 'My First Verify Service'})
 //     //                   .then(service => console.log(service));
@@ -167,6 +180,45 @@ app.get('/subs/:subName', (req, res) => {
 //         console.log(service.sid);
 //     })
 // });
+
+app.get("/sendNotifs", (req, res)=> {
+    const user = req.query.user;
+    if (user != "crazy_sandwich"){
+        res.status(401);
+        res.send("Unauthorized");
+    }
+    var onSale = [];
+    var subs = [];
+    axios.get("https://api.pubsub-api.dev/onsale/")
+        .then(aresSale => {
+            onSale = aresSale.data.filter(sub => sub.on_sale == "True");
+            onSale.map(s => {
+                subs.push(subData[s.name].name)
+            });
+            // res.json(onSale);
+            var phone_numbers = [];
+            UserModel.find({'pubsubs': {$in: subs}}, '', function(err, users){
+                users.forEach(user => {
+                    client.messages 
+                        .create({ 
+                            body: 'Hey ' + user.name + '! One of your favorite sandwiches are on sale! https://pubsub-4dcf3.web.app/',
+                            messagingServiceSid: twil_ser_pub_sid,      
+                            to: user.phone_number 
+                        }) 
+                        .then(message => console.log(message.sid)) 
+                        .done();
+                });
+                
+            });
+            res.status(200);
+            res.send("Ok");
+
+
+        }).catch(err => {
+            console.log(err);
+        });
+
+})
 
 app.post('/sendOTP', (req, res) => {
     // req.body.phone
@@ -225,9 +277,6 @@ app.post('/verifyOTP', (req, res) => {
             }
         });
 
-    
-
-    
 });
 
 app.listen(port, () => {
