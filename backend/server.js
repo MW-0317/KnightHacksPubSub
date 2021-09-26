@@ -18,6 +18,9 @@ const mongoURI = process.env.MONGOURI;
 const port = process.env.PORT;
 const twil_ser_sid = process.env.TWILIO_SERVICE_SID;
 
+const cors = require('cors');
+app.use(cors());
+
 
 mongoose.connect(mongoURI).catch(err => console.log(err));
 const connection = mongoose.connection;
@@ -212,14 +215,14 @@ app.get('/verifyOTP', (req, res) => {
     var phone_num = req.body.phone;
     User.findOne({'phone_number': phone_num}, '', function(err, user){
         if (user == null) {
-            console.log("here");
-            UserModel.create({phone_number: req.body.phone, pubsubs: req.body.pubsubs}, function(err, inst){
+            UserModel.create({name: req.body.name, phone_number: req.body.phone, pubsubs: req.body.pubsubs}, function(err, inst){
                 if (err){ res.send(400); return;}
                 res.send(200);
             })
             return;
         }
         user.pubsubs = req.body.pubsubs;
+        user.name = req.body.name;
         user.save();
         res.send(200);
     });
